@@ -32,11 +32,11 @@ public class FileSearchApp {
 		}		 
 	}
 	
-	/*public void walkDirectory(String path) {
+	public void walkDirectory(String path) {
 		System.out.println("walkDirectory: " + path);
 		searchFile(null);
 		addFileToZip(null);
-	}*/
+	}
 	
 	public void walkDirectoryJava6(String path) throws IOException {
 		File dir = new File(path);
