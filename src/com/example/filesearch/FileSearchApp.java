@@ -2,6 +2,12 @@ package com.example.filesearch;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 public class FileSearchApp {
 	String path;
@@ -26,7 +32,7 @@ public class FileSearchApp {
 		}
 		
 		try {
-			app.walkDirectory(app.getPath());	
+			app.walkDirectoryJava8(app.getPath());	
 		} catch (Exception e){
 			e.printStackTrace();
 		}		 
@@ -44,6 +50,8 @@ public class FileSearchApp {
 		
 		for (File file : files) {
 			if(file.isDirectory()) {
+				System.out.println("New Dir separator ---------------------------------");
+				System.out.println("Dir: " + file.getPath());
 				walkDirectoryJava6(file.getAbsolutePath());
 			} else {
 				processFile(file);
@@ -51,7 +59,22 @@ public class FileSearchApp {
 		}		
 	}
 	
-	//new sample comment
+	public void walkDirectoryJava7(String path) throws IOException{
+		Files.walkFileTree(Paths.get(path), new SimpleFileVisitor<Path>() {
+			@Override
+			public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+			throws IOException {
+				processFile(file.toFile());
+				return FileVisitResult.CONTINUE;
+			}
+		});
+	}
+	
+	public void walkDirectoryJava8(String path) throws IOException{
+		Files.walk(Paths.get(path))
+		.forEach(f -> processFile(f.toFile()));
+	}
+	
 	
 	public void processFile(File file) {
 		System.out.println("processFile: " + file);
