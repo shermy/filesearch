@@ -32,7 +32,7 @@ public class FileSearchApp {
 		}
 		
 		try {
-			app.walkDirectoryJava8(app.getPath());	
+			app.walkDirectoryJava6(app.getPath());	
 		} catch (Exception e){
 			e.printStackTrace();
 		}		 
